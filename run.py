@@ -3,18 +3,25 @@ import json
 import ssl
 import pafy
 import vlc
+import config as cfg
 
 # Ignore SSL certificate errors
 ctx = ssl.create_default_context()
 ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
 
-api_key = 'AIzaSyDXEEu3hkBznF3uhUUtTCRu4ayt84Vb0AM'
+# Collect api_key and the URL
+api_key = cfg.api_key
+
+ # Its a customised google search API in Youtube.
 service_url ='https://www.googleapis.com/youtube/v3/search?'
-#url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q=skateboarding%20dog&type=video&videoDefinition=high&key=[YOUR_API_KEY]'
+
+# Complete syntax for future reference
+# url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q=skateboarding%20dog&type=video&videoDefinition=high&key=[YOUR_API_KEY]'
 
 
 while True:
+    # get song info.
     song = input('Enter song description: ')
     parms = dict()
     parms['part']='snippet'
@@ -34,10 +41,15 @@ while True:
         js = json.loads(data)
     except:
         js = None
-    #print(json.dumps(js, indent=4))
-    # #js = json.dumps(js, indent=4)
+        print("Error! Please try again")
+        continue
 
-    track = js['items'][0]
+    try:
+        track = js['items'][0]
+
+    except:
+        print("Error! Please try again")
+        continue
     title = track['snippet']['title']
     link = track['id']['videoId']
     print(title)
@@ -47,7 +59,7 @@ while True:
     print('Duration -',v.duration)
     print('rating -',v.rating)
     print('source -',v.author)
-    #print(v.length)
+    # print(v.length)
     # print(v.keywords)
     # print(v.thumb)
     # print(v.videoid)
@@ -65,10 +77,10 @@ while True:
     player = vlc.MediaPlayer("./"+string_path)
     print(player)
     player.play()
-    next_act = input("Press stop to close & next to play next song\n")
-    if next_act=='stop':
+    next_act = input("Type and enter 's' to stop & 'n' to play next song\n")
+    if next_act=='s':
         player.stop()
         break
-    if next_act=='next':
+    if next_act=='n':
         player.stop()
         continue
