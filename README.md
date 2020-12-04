@@ -4,7 +4,7 @@ A CLI tool to download and play audio content from youtube by only searching for
 
 ## How to Use
 
-Use your personal `API key` for the `Youtube API v3` and use it in the config.py file. Otherwise, you can also you th one provided. However its not advisable, since its a personal API key and has use/month limitations.
+Use your personal `API key` for the `Youtube API v3` and use it in the `config.py` file. Otherwise, you can also use the one already provided. However its not advisable, since its a personal API key and has use/month limitations.
 
 ```shell
 $ pip3 install youtube_dl
